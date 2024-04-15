@@ -2,15 +2,19 @@ import { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
-import Header from "./assets/component/Header";
-import Todo from "./assets/component/Todo";
+import Header from "./component/Header";
+import List from "./component/List";
+import Todo from "./component/Todo";
 
 function App() {
   return (
-    <div>
+   
+      <div className="bg-[#1A1A1A] h-screen ">
         <Header />
-          <Todo/>     
-    </div>
+        <Todo />
+        <List />
+      </div>
+  
   );
 }
 
