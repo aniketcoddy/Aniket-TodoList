@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import {addUser} from "../UserSlice"
+import "aos/dist/aos.css";
+import Aos from "aos";
 
 const Todo = () => {
   
   // state to store the value from input bar
   const [value , setValue] = useState("")
+  const [error , setError] = useState(false)
 
    // Redux dispatch function
   const dispatch = useDispatch()  
@@ -25,20 +28,28 @@ const Todo = () => {
 
    // Function to add new user to Redux store
   const addNewUser=(payload)=>{
-    console.log(payload,"check4")
+    if(payload.trim()=== ''){
+      setError(true)
+    }else{
       dispatch(addUser(payload))
-
+       setError(false)
       setValue("")
+    }
+      
   }
 
+  useEffect(() => {
+    Aos.init();
+  }, []);
   
   return (
     <div className="flex relative justify-center items-center">
       <div className="flex flex-col">
-        <div className="flex gap-3 w-[330px] sm:w-[581px] md:w-[649px] -mt-4 lg:w-[749px]">
+        <div 
+        className={`flex gap-3 w-[330px] sm:w-[581px] md:w-[649px] -mt-4 lg:w-[749px] ${error?"animate-bounce":""}`}>
           {/* Input field */}
           <input
-            className="border-solid pl-4 pr-4 shadow-md font-[Inter] font-medium text-base opacity-100 bg-[#262626d9] text-[#dedede] border-[#262626d9] border-2 w-96 sm:w-[478px] md:w-[541px] lg:w-[641px] rounded-md"
+            className={`border-solid pl-4 pr-4 shadow-md font-[Inter] font-medium text-base opacity-100 bg-[#262626d9] text-[#dedede] ${error?"border-[#951111d9]":"border-[#262626d9]"} border-2 w-96 sm:w-[478px] md:w-[541px] lg:w-[641px] rounded-md`}
             value={value} onChange={handleOnChange} onKeyDown={handleKeyDown}
           />
           {/* Add button */}

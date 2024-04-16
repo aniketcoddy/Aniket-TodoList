@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { removeUser } from "../UserSlice";
+import "aos/dist/aos.css";
+import Aos from "aos";
 
 const List = () => {
   const [select, setSelect] = useState([]);
@@ -29,17 +31,31 @@ const List = () => {
     }
   };
 
+  useEffect(() => {
+    Aos.init();
+  }, []);
+
   return (
     <div className="flex flex-col bg-[#1A1A1A] mt-14  justify-center items-center">
       <div className="flex flex-col gap-3 ">
         {/* Mapping through user data */}
         {data.map((element, index) => (
           <div
-            className={`flex flex-col sm:flex-row sm:px-4 border-solid w-[330px] sm:w-[584px] md:w-[649px] lg:w-[748px] py-2 lg:p-4 gap-3 items-center shadow-md font-[Inter] font-medium text-base text-[#dedede] ${select.includes(index)?"border-[#951111d9] bg-[#951111d9]":"border-[#262626d9] bg-[#262626d9]"} border-2 rounded-md`}
+            data-aos="zoom-in"
+            data-aos-duration="500"
+            className={`flex flex-col sm:flex-row sm:px-4 border-solid w-[330px] sm:w-[584px] md:w-[649px] lg:w-[748px] py-2 lg:p-4 gap-3 items-center shadow-md font-[Inter] font-medium text-base text-[#dedede] ${
+              select.includes(index)
+                ? "border-[#951111d9] bg-[#951111d9]"
+                : "border-[#262626d9] bg-[#262626d9]"
+            } border-2 rounded-md`}
             key={index}
           >
             {/* Displaying user information */}
-            <h1 className={`break-all w-72 sm:w-[721px] xl:w-[897px] sm:text-lg ${select.includes(index)?"line-through":""} `}>
+            <h1
+              className={`break-all w-72 sm:w-[721px] xl:w-[897px] sm:text-lg ${
+                select.includes(index) ? "line-through" : ""
+              } `}
+            >
               {element}
             </h1>
             <div className="flex gap-2 sm:w-28">
